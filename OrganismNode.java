@@ -163,7 +163,7 @@ public class OrganismNode {
             middle = preyNode;
         }
         else if(right == null){
-            right = preyNode
+            right = preyNode;
         }
         else{
             throw new PositionNotAvailableException();
