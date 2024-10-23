@@ -133,4 +133,41 @@ public class OrganismNode {
     public void setPlant(boolean plant) {
         isPlant = plant;
     }
+
+    /**
+     * Adds preyNode as prey to this node.
+     * Add child nodes in the following order:
+     * left filled first, middle filled second, and right filled third.
+     *
+     * @param preyNode
+     *    The OrganismNode to be added as prey of this organism.
+     * @throws PositionNotAvailableException
+     *    Thrown if there is no available child position for preyNode
+     *    to be added (i.e. left, middle, and right are all being used)
+     * @throws IsPlantException
+     *    Thrown if this node is a plant node
+     * @throws DietMismatchException
+     *    Thrown if preyNode does not correctly correspond to the diet of this animal.
+     */
+    public void addPrey(OrganismNode preyNode) throws PositionNotAvailableException, IsPlantException, DietMismatchException{
+        if(isPlant){
+            throw new IsPlantException();
+        }
+        else if((isCarnivore && preyNode.getIsPlant()) || (isHerbivore && !preyNode.getIsPlant())){
+            throw new DietMismatchException();
+        }
+        else if(left == null){
+            left = preyNode;
+        }
+        else if(middle == null){
+            middle = preyNode;
+        }
+        else if(right == null){
+            right = preyNode
+        }
+        else{
+            throw new PositionNotAvailableException();
+        }
+
+    }
 }
