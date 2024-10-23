@@ -9,4 +9,128 @@
  **/
 
 public class OrganismNode {
+    private String name;
+    private boolean isPlant;
+    private boolean isHerbivore;
+    private boolean isCarnivore;
+    private OrganismNode left;
+    private OrganismNode middle;
+    private OrganismNode right;
+
+    public OrganismNode(boolean isPlant, boolean isHerbivore, boolean isCarnivore, String name){
+        this.name = name;
+        this.isPlant = isPlant;
+        this.isHerbivore = isHerbivore;
+        this.isCarnivore = isCarnivore;
+    }
+
+    /**
+     * Returns if the organism is a plant or not
+     *
+     * @return
+     *    The boolean in the isPlant field
+     */
+    public boolean getIsPlant(){
+        return isPlant;
+    }
+
+    /**
+     * Returns if the organism is a herbivore or not
+     *
+     * @return
+     *    The boolean in the isHerbivore field
+     */
+    public boolean getIsHerbivore(){
+        return isHerbivore;
+    }
+
+    /**
+     * Returns if the organism is a isCarnivore or not
+     *
+     * @return
+     *    The boolean in the isPlant field
+     */
+    public boolean getIsCarnivore(){
+        return isCarnivore;
+    }
+
+    /**
+     * Returns the name of the OrganismNode
+     *
+     * @return
+     *    The String in the name field
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Returns the left OrganismNode child
+     *
+     * @return
+     *    The OrganismNode in the left field
+     */
+    public OrganismNode getLeft() {
+        return left;
+    }
+
+    /**
+     * Returns the middle OrganismNode child
+     *
+     * @return
+     *    The OrganismNode in the middle field
+     */
+    public OrganismNode getMiddle() {
+        return middle;
+    }
+
+    /**
+     * Returns the right OrganismNode child
+     *
+     * @return
+     *    The OrganismNode in the right field
+     */
+    public OrganismNode getRight() {
+        return right;
+    }
+
+    /**
+     * Sets the value of the name field
+     *
+     * @param name
+     *    New value of the name field
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Sets the value of the isCarnivore field
+     *
+     * @param carnivore
+     *    New value of the isCarnivore field
+     */
+    public void setCarnivore(boolean carnivore) {
+        isCarnivore = carnivore;
+    }
+
+    /**
+     * Sets the value of the isHerbivore field
+     *
+     * @param herbivore
+     *    New value of the isHerbivore field
+     */
+    public void setHerbivore(boolean herbivore) {
+        isHerbivore = herbivore;
+    }
+
+    /**
+     * Sets the value of the isPlant field
+     *
+     * @param plant
+     *    New value of the isPlant field
+     */
+    public void setPlant(boolean plant) {
+        isPlant = plant;
+    }
 }
