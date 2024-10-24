@@ -17,7 +17,20 @@ public class OrganismNode {
     private OrganismNode middle;
     private OrganismNode right;
 
-    public OrganismNode(boolean isPlant, boolean isHerbivore, boolean isCarnivore, String name){
+    /**
+     * Creates an empty OrganismNode
+     */
+    public OrganismNode(){
+
+    }
+
+    /**
+     * Creates an organism with a name
+     *
+     * @param name
+     *    Name of the new organism
+     */
+    public OrganismNode(String name){
         this.name = name;
         this.isPlant = isPlant;
         this.isHerbivore = isHerbivore;
@@ -110,7 +123,7 @@ public class OrganismNode {
      * @param carnivore
      *    New value of the isCarnivore field
      */
-    public void setCarnivore(boolean carnivore) {
+    public void setIsCarnivore(boolean carnivore) {
         isCarnivore = carnivore;
     }
 
@@ -120,7 +133,7 @@ public class OrganismNode {
      * @param herbivore
      *    New value of the isHerbivore field
      */
-    public void setHerbivore(boolean herbivore) {
+    public void setIsHerbivore(boolean herbivore) {
         isHerbivore = herbivore;
     }
 
@@ -130,7 +143,7 @@ public class OrganismNode {
      * @param plant
      *    New value of the isPlant field
      */
-    public void setPlant(boolean plant) {
+    public void setIsPlant(boolean plant) {
         isPlant = plant;
     }
 
