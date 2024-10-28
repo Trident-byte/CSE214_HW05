@@ -1,3 +1,4 @@
+import javax.swing.text.Position;
 import java.util.Scanner;
 
 /**
@@ -21,19 +22,53 @@ public class FoodPyramid {
      *    Arguments given in the command line before running
      */
     public static void main(String[] args){
-        OrganismTree tree;
         Scanner input = new Scanner(System.in);
         boolean isRunning = true;
         System.out.print("What is the name of the apex predator?: ");
         String apexPredator = input.nextLine().strip();
         OrganismNode newNode = new OrganismNode(apexPredator);
-        askOrganismType(input, newNode);
+        boolean[] diet = askOrganismType(input);
+        newNode.setIsCarnivore(diet[1]);
+        newNode.setIsHerbivore(diet[0]);
         System.out.println("\n\nConstructing food pyramid. . .");
+        OrganismTree tree = new OrganismTree(newNode);
         printMenu();
         while(isRunning){
             System.out.print("Please select an option: ");
             String command = input.nextLine().strip().toLowerCase();
-            if(command.equals("q")){
+            if(command.equals("pc")){
+                addPlant(input, tree);
+            }
+            else if(command.equals("ac")){
+                addAnimal(input, tree);
+            }
+            else if(command.equals("rc")){
+                remove(input, tree);
+            }
+            else if(command.equals("p")){
+                try{
+                    System.out.println(tree.listPrey());
+                } catch(IsPlantException e){
+                    System.out.println("Cursor is pointing to a plant");
+                }
+            }
+            else if(command.equals("c")){
+                System.out.println(tree.listFoodChain());
+            }
+            else if(command.equals("f")){
+                tree.printOrganismTree();
+            }
+            else if(command.equals("lp")){
+                System.out.println(tree.listAllPlants());
+            }
+            else if(command.equals("r")){
+                tree.cursorReset();
+                System.out.println("Cursor successfully reset to root");
+            }
+            else if(command.equals("m")){
+                move(input, tree);
+            }
+            else if(command.equals("q")){
                 isRunning = false;
             }
         }
@@ -54,17 +89,67 @@ public class FoodPyramid {
         System.out.println("(Q) - Quit");
     }
 
-    private static void askOrganismType(Scanner input, OrganismNode newNode){
-        System.out.print("Is the organism an herbivore / a carnivore / an omnivore? (H / C / O): ");
-        String type = input.nextLine();
+    private static boolean[] askOrganismType(Scanner input){
+        String type = prompter(input, "Is the organism an herbivore / a carnivore / an omnivore? (H / C / O): ");
+        boolean[] diet = new boolean[2];
         if(type.equals("C")){
-            newNode.setIsCarnivore(true);
+            diet[1] = true;
         }
         else if(type.equals("H")){
-            newNode.setIsHerbivore(true);
+            diet[0] = true;
         }
         else if(type.equals("O")){
-            newNode.setIsPlant(true);
+            diet[1] = true;
+            diet[0] = true;
         }
+        return diet;
+    }
+
+    private static void addPlant(Scanner input, OrganismTree tree){
+        String plantName = prompter(input, "What is the name of the organism?: ");
+        try{
+            tree.addPlantChild(plantName);
+            System.out.println(plantName + " has successfully been added as prey for the "
+                    + tree.getCursor().getName() + "!");
+        } catch(PositionNotAvailableException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void addAnimal(Scanner input, OrganismTree tree){
+        String animalName = prompter(input, "What is the name of the organism?: ");
+        try{
+            boolean[] diet = askOrganismType(input);
+            tree.addAnimalChild(animalName, diet[0], diet[1]);
+            System.out.println("A(n) " + animalName + " has successfully been added as prey for the "
+                    + tree.getCursor().getName() + "!");
+        } catch(PositionNotAvailableException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void remove(Scanner input, OrganismTree tree){
+        String preyName = prompter(input, "What is the name of the organism to be removed?: ");
+        try{
+            tree.removeChild(preyName);
+            System.out.println("A(n) " + preyName + " has been successfully removed as prey for the "
+                                + tree.getCursor().getName() + "!");
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void move(Scanner input, OrganismTree tree){
+        String organism = prompter(input, "Move to?: ");
+        try{
+            tree.moveCursor(organism);
+            System.out.println("Cursor successfully moved to " + organism + "!");
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    private static String prompter(Scanner input, String prompt){
+        System.out.print(prompt);
+        return input.nextLine();
     }
 }

@@ -148,6 +148,36 @@ public class OrganismNode {
     }
 
     /**
+     * Sets the value of the left field
+     *
+     * @param left
+     *    new value of the left field
+     */
+    public void setLeft(OrganismNode left) {
+        this.left = left;
+    }
+
+    /**
+     * Sets the value of the right field
+     *
+     * @param right
+     *    new value of the right field
+     */
+    public void setRight(OrganismNode right) {
+        this.right = right;
+    }
+
+    /**
+     * Sets the value of the middle field
+     *
+     * @param middle
+     *    new value of the middle field
+     */
+    public void setMiddle(OrganismNode middle) {
+        this.middle = middle;
+    }
+
+    /**
      * Adds preyNode as prey to this node.
      * Add child nodes in the following order:
      * left filled first, middle filled second, and right filled third.
@@ -166,7 +196,7 @@ public class OrganismNode {
         if(isPlant){
             throw new IsPlantException();
         }
-        else if((isCarnivore && preyNode.getIsPlant()) || (isHerbivore && !preyNode.getIsPlant())){
+        else if((isCarnivore && preyNode.getIsPlant()) || (isHerbivore && !preyNode.getIsPlant()) && (!isCarnivore || !isHerbivore)){
             throw new DietMismatchException();
         }
         else if(left == null){
