@@ -196,21 +196,23 @@ public class OrganismNode {
         if(isPlant){
             throw new IsPlantException();
         }
-        else if((isCarnivore && preyNode.getIsPlant()) || (isHerbivore && !preyNode.getIsPlant()) && (!isCarnivore || !isHerbivore)){
-            throw new DietMismatchException();
-        }
-        else if(left == null){
-            left = preyNode;
-        }
-        else if(middle == null){
-            middle = preyNode;
-        }
-        else if(right == null){
-            right = preyNode;
+        else if((isCarnivore && !preyNode.getIsPlant()) || (isHerbivore && preyNode.getIsPlant()) || (isCarnivore && isHerbivore)){
+            if(left == null){
+                left = preyNode;
+            }
+            else if(middle == null){
+                middle = preyNode;
+            }
+            else if(right == null){
+                right = preyNode;
+            }
+            else{
+                throw new PositionNotAvailableException();
+            }
         }
         else{
-            throw new PositionNotAvailableException();
+            System.out.println((isCarnivore && preyNode.getIsPlant())  + " + " + (isHerbivore && !preyNode.getIsPlant())  + " + " + (!isCarnivore || !isHerbivore));
+            throw new DietMismatchException();
         }
-
     }
 }
