@@ -109,7 +109,7 @@ public class FoodPyramid {
             tree.addPlantChild(plantName);
             System.out.println(plantName + " has successfully been added as prey for the "
                     + tree.getCursor().getName() + "!");
-        } catch(PositionNotAvailableException e){
+        } catch(PositionNotAvailableException | IllegalArgumentException e){
             System.out.println(e.getMessage());
         }
     }
@@ -121,9 +121,7 @@ public class FoodPyramid {
             tree.addAnimalChild(animalName, diet[0], diet[1]);
             System.out.println("A(n) " + animalName + " has successfully been added as prey for the "
                     + tree.getCursor().getName() + "!");
-        } catch(PositionNotAvailableException e){
-            System.out.println(e.getMessage());
-        } catch(IllegalArgumentException e){
+        } catch(PositionNotAvailableException | IllegalArgumentException e){
             System.out.println(e.getMessage());
         }
     }
@@ -162,4 +160,5 @@ public class FoodPyramid {
         }
         return answer;
     }
+
 }

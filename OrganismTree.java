@@ -65,7 +65,7 @@ public class OrganismTree {
             cursor = cursor.getMiddle();
         }
         else{
-            throw new IllegalArgumentException("The current animal does not eat " + name);
+            throw new IllegalArgumentException("ERROR: This prey does not exist for this predator");
         }
     }
 
@@ -289,20 +289,20 @@ public class OrganismTree {
             return "";
         }
         if(curNode.getIsPlant()){
-            return curNode.getName();
+            return curNode.getName() + ", ";
         }
         String leftPath = listPlantHelper(curNode.getLeft());
         String rightPath = listPlantHelper(curNode.getRight());
         String middlePath = listPlantHelper(curNode.getMiddle());
         String plantList = "";
-        if(leftPath != ""){
-            plantList += leftPath + ", ";
+        if(!leftPath.equals("")){
+            plantList += leftPath;
         }
         if(!middlePath.equals("")){
-            plantList += middlePath + ", ";
+            plantList += middlePath;
         }
         if(!rightPath.equals("")){
-            plantList += rightPath + ", ";
+            plantList += rightPath;
         }
         return plantList.strip();
     }
