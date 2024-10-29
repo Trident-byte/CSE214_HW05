@@ -256,12 +256,12 @@ public class OrganismTree {
         OrganismNode left = cursor.getLeft();
         OrganismNode middle = cursor.getMiddle();
         if((left != null && left.getName().equals(name))|| (middle != null && middle.getName().equals(name))){
-            throw new IllegalArgumentException("The animal is already a prey.");
+            throw new IllegalArgumentException("ERROR: This prey already exists for this predator");
         }
         try{
             cursor.addPrey(organism);
         } catch(IsPlantException | DietMismatchException e){
-            System.out.println(e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 

@@ -1,4 +1,3 @@
-import javax.swing.text.Position;
 import java.util.Scanner;
 
 /**
@@ -34,8 +33,7 @@ public class FoodPyramid {
         OrganismTree tree = new OrganismTree(newNode);
         printMenu();
         while(isRunning){
-            System.out.print("Please select an option: ");
-            String command = input.nextLine().strip().toLowerCase();
+            String command = prompter(input, "Please enter a command: ", true);
             if(command.equals("pc")){
                 addPlant(input, tree);
             }
@@ -90,7 +88,7 @@ public class FoodPyramid {
     }
 
     private static boolean[] askOrganismType(Scanner input){
-        String type = prompter(input, "Is the organism an herbivore / a carnivore / an omnivore? (H / C / O): ");
+        String type = prompter(input, "Is the organism an herbivore / a carnivore / an omnivore? (H / C / O): ", false);
         boolean[] diet = new boolean[2];
         if(type.equals("C")){
             diet[1] = true;
@@ -106,7 +104,7 @@ public class FoodPyramid {
     }
 
     private static void addPlant(Scanner input, OrganismTree tree){
-        String plantName = prompter(input, "What is the name of the organism?: ");
+        String plantName = prompter(input, "What is the name of the organism?: ", false);
         try{
             tree.addPlantChild(plantName);
             System.out.println(plantName + " has successfully been added as prey for the "
@@ -117,7 +115,7 @@ public class FoodPyramid {
     }
 
     private static void addAnimal(Scanner input, OrganismTree tree){
-        String animalName = prompter(input, "What is the name of the organism?: ");
+        String animalName = prompter(input, "What is the name of the organism?: ", false);
         try{
             boolean[] diet = askOrganismType(input);
             tree.addAnimalChild(animalName, diet[0], diet[1]);
@@ -125,11 +123,13 @@ public class FoodPyramid {
                     + tree.getCursor().getName() + "!");
         } catch(PositionNotAvailableException e){
             System.out.println(e.getMessage());
+        } catch(IllegalArgumentException e){
+            System.out.println(e.getMessage());
         }
     }
 
     private static void remove(Scanner input, OrganismTree tree){
-        String preyName = prompter(input, "What is the name of the organism to be removed?: ");
+        String preyName = prompter(input, "What is the name of the organism to be removed?: ", false);
         try{
             tree.removeChild(preyName);
             System.out.println("A(n) " + preyName + " has been successfully removed as prey for the "
@@ -140,7 +140,7 @@ public class FoodPyramid {
     }
 
     private static void move(Scanner input, OrganismTree tree){
-        String organism = prompter(input, "Move to?: ");
+        String organism = prompter(input, "Move to?: ", false);
         try{
             tree.moveCursor(organism);
             System.out.println("Cursor successfully moved to " + organism + "!");
@@ -148,8 +148,18 @@ public class FoodPyramid {
             System.out.println(e.getMessage());
         }
     }
-    private static String prompter(Scanner input, String prompt){
+    private static String prompter(Scanner input, String prompt, boolean command){
         System.out.print(prompt);
-        return input.nextLine();
+        String answer = "";
+        if(input.hasNextLine()){
+            answer = input.nextLine();
+        }
+        if(command){
+            if(answer.equals("")){
+                answer = "q";
+            }
+            answer = answer.strip().toLowerCase();
+        }
+        return answer;
     }
 }

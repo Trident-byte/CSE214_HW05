@@ -32,9 +32,6 @@ public class OrganismNode {
      */
     public OrganismNode(String name){
         this.name = name;
-        this.isPlant = isPlant;
-        this.isHerbivore = isHerbivore;
-        this.isCarnivore = isCarnivore;
     }
 
     /**

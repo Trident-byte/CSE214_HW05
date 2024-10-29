@@ -1,6 +1,6 @@
 import java.lang.Exception;
 public class PositionNotAvailableException extends Exception{
     public PositionNotAvailableException(){
-        super("Not available child position");
+        super("ERROR: There is no more room for more prey for this predator");
     }
 }
